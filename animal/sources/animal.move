@@ -1,7 +1,7 @@
 module animal::animal {
-    use sui::transfer;
-    use sui::object::{Self, UID};
-    use sui::tx_context::{Self, TxContext};
+    // use sui::transfer;
+    use sui::object;
+    use sui::tx_context::TxContext;
     use std::string;
 
     public struct AnimalObject has key, store {

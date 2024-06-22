@@ -1,3 +1,4 @@
+#[allow(duplicate_alias)]
 module animal::animal {
     // use sui::transfer;
     use sui::object;

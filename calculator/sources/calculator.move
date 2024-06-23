@@ -1,20 +1,59 @@
-/// Module: calculator
-module calculator::calculator {
-    public fun add(a: u64, b: u64): u64 {
-        a + b
+#[allow(duplicate_alias)]
+module calculator::calculator{
+    use sui::object::{Self, UID};
+    use sui::tx_context::{Self, TxContext};
+    use sui::transfer;
+
+    public struct Output has key, store{
+        id: UID,
+        result: u64,
+
     }
 
-    public fun sub(a: u64, b: u64): u64 {
-        assert!(a >= b, 1);
-        a - b
+    public entry fun start (ctx: &mut TxContext){
+       let output = Output{
+            id: object::new(ctx),
+            result: 0,
+        }; 
+
+        transfer::public_transfer(output, tx_context::sender(ctx));  
+
     }
 
-    public fun mul(a: u64, b: u64): u64 {
-        a * b
+    public entry fun add (a:u64, b:u64, ctx: &mut TxContext){
+        let output = Output{
+            id: object::new(ctx),
+            result: a + b,
+        };
+        
+        transfer::public_transfer(output, tx_context::sender(ctx));  
+    }
+    
+    public entry fun sub (a:u64, b:u64, ctx: &mut TxContext){
+        let output = Output{
+            id: object::new(ctx),
+            result: a - b,
+        };
+        
+        transfer::public_transfer(output, tx_context::sender(ctx)); 
     }
 
-    public fun div(a: u64, b: u64): u64 {
-        assert!(b > 0, 2);
-        a / b
+    public entry fun mul (a:u64, b:u64, ctx: &mut TxContext){
+        let output = Output{
+            id: object::new(ctx),
+            result: a * b,
+        };
+        
+        transfer::public_transfer(output, tx_context::sender(ctx));
     }
+
+    public entry fun div (a:u64, b:u64, ctx: &mut TxContext){
+        let output = Output{
+            id: object::new(ctx),
+            result: a / b,
+        };
+        
+        transfer::public_transfer(output, tx_context::sender(ctx));
+    }
+
 }
